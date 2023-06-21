@@ -1,21 +1,28 @@
-const { Telegraf } = require('telegraf');
-const axios = require('axios');
+const { Telegraf } = require("telegraf");
+const axios = require("axios");
 
 class Bot {
   constructor(token) {
     this.bot = new Telegraf(token);
     this.bot.start(this.startHandler.bind(this));
-    this.bot.on('text', this.textHandler.bind(this));
+    this.bot.on("text", this.textHandler.bind(this));
     this.bot.launch();
-    this.nome = '';
-    console.log('PokeScraper Telegram em Funcionamento');
+    this.nome = "";
+    console.log("PokeScraper Telegram em Funcionamento");
   }
 
   startHandler(ctx) {
     const chatId = ctx.chat.id;
-    this.bot.telegram.sendMessage(chatId, 'Olá, bem-vindo ao PokeScraper!');
+    this.bot.telegram.sendMessage(chatId, "Olá, bem-vindo ao PokeScraper!");
     setTimeout(() => {
       ctx.reply(`Digite o nome do seu Pokémon Preferido ❤️`);
+    }, 1000);
+  }
+
+  replyWithNome(ctx, nome) {
+    ctx.reply(`Você digitou ${nome}`);
+    setTimeout(() => {
+      ctx.reply(`Aguarde enquanto coletamos informações`);
     }, 1000);
   }
 
@@ -29,33 +36,28 @@ class Bot {
         `https://worb0n0l5a.execute-api.us-east-1.amazonaws.com/dev/?pokemon=${nome}`
       );
 
-      // Processar a resposta da API
+      // Insere a resposta do Lambda na variável
       const pokemonData = response.data.body;
 
-      // Exemplo de resposta ao usuário
+      // Resposta ao usuário com os dados do Pokemon
       ctx.reply(
         `Nome: ${pokemonData.name}\nPeso: ${pokemonData.peso},\nAltura: ${
           pokemonData.altura
         },\nTipo: ${pokemonData.types.join(
-          ', '
-        )},\nHabilidades: ${pokemonData.habilidades.join(', ')}\n`
+          ", "
+        )},\nHabilidades: ${pokemonData.habilidades.join(", ")}\n`
       );
       console.log(pokemonData);
       // ctx.reply(`Tipo(s) do Pokémon: ${pokemonData.types.join(', ')}`);
       // // ... adicione outras respostas conforme necessário
     } catch (error) {
-      console.log('Erro ao fazer a solicitação à API:', error);
-      ctx.reply('Ocorreu um erro ao obter informações do Pokémon.');
+      console.log("Erro ao fazer a solicitação à API:", error);
+      ctx.reply(
+        "Oops! Parece que houve um pequeno erro de digitação. Por favor, verifique a ortografia e tente novamente."
+      );
     }
-  }
-
-  replyWithNome(ctx, nome) {
-    ctx.reply(`Você digitou ${nome}`);
-    setTimeout(() => {
-      ctx.reply(`Aguarde enquanto coletamos informações`);
-    }, 1000);
   }
 }
 
-const bot = new Bot('5943687601:AAHIBuOeHTMkq86m1wVvJRVGav_3V8wHJ00');
+const bot = new Bot("5943687601:AAHIBuOeHTMkq86m1wVvJRVGav_3V8wHJ00");
 module.exports = bot;

@@ -29,6 +29,7 @@ _Chatbot desenvolvido para uso do [Web Scraper pokemon](https://github.com/euber
 ## Tecnologias
 * NodeJS
 * telegraf
+* Axios
 
 ## Instalação
 Clonar o projeto:
@@ -50,7 +51,7 @@ npm start
 ```bash
 PokeScraper Telegram em Funcionamento
 ```
-Após isso, é apenas abrir o [PokeScraper](https://t.me/PokeScraperBot) no telegram, e enviar "/start" para iniciar a conversa.
+Após isso, é apenas abrir o PokeScraper([@PokeScraperBot](https://t.me/PokeScraperBot)) no telegram, e enviar "/start" para iniciar a conversa.
 
 *****
 
