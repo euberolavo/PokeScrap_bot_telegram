@@ -48,8 +48,6 @@ class Bot {
         )},\nHabilidades: ${pokemonData.habilidades.join(", ")}\n`
       );
       console.log(pokemonData);
-      // ctx.reply(`Tipo(s) do Pokémon: ${pokemonData.types.join(', ')}`);
-      // // ... adicione outras respostas conforme necessário
     } catch (error) {
       console.log("Erro ao fazer a solicitação à API:", error);
       ctx.reply(
@@ -59,5 +57,5 @@ class Bot {
   }
 }
 
-const bot = new Bot("5943687601:AAHIBuOeHTMkq86m1wVvJRVGav_3V8wHJ00");
+const bot = new Bot("<SEU-TOKEN>");
 module.exports = bot;
